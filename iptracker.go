@@ -87,7 +87,7 @@ func main() {
 
 		switch Action(header.Action) {
 		case Connect:
-			log.Printf("Handling action=connect for transaction=%d", header.TransactionID)
+			log.Printf("Handling action=connect for transaction=%d with ip=%s", header.TransactionID, clientAddr.IP.To4().String())
 			if header.ConnectionID != ProtocolID {
 				log.Println("Invalid protocol ID:", header.ConnectionID)
 				continue
@@ -101,7 +101,7 @@ func main() {
 				log.Println("Unable to handle announce request:", err.Error())
 			}
 		case Announce:
-			log.Printf("Handling action=announce for transaction=%d", header.TransactionID)
+			log.Printf("Handling action=announce for transaction=%d with ip=%s", header.TransactionID, clientAddr.IP.To4().String())
 			response := ErrorResponse{
 				Action:        int32(Error),
 				TransactionID: header.TransactionID,
@@ -112,7 +112,7 @@ func main() {
 				log.Println("Unable to handle announce request:", err.Error())
 			}
 		default:
-			log.Printf("Ignoring unsupported action=%d for transaction=%d", header.Action, header.TransactionID)
+			log.Printf("Ignoring unsupported action=%d for transaction=%d with ip=%s", header.Action, header.TransactionID, clientAddr.IP.To4().String())
 		}
 	}
 }
