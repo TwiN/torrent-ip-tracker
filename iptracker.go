@@ -87,6 +87,7 @@ func main() {
 
 		switch Action(header.Action) {
 		case Connect:
+			log.Printf("Handling action=connect for transaction=%d", header.TransactionID)
 			if header.ConnectionID != ProtocolID {
 				log.Println("Invalid protocol ID:", header.ConnectionID)
 				continue
@@ -100,6 +101,7 @@ func main() {
 				log.Println("Unable to handle announce request:", err.Error())
 			}
 		case Announce:
+			log.Printf("Handling action=announce for transaction=%d", header.TransactionID)
 			response := ErrorResponse{
 				Action:        int32(Error),
 				TransactionID: header.TransactionID,
