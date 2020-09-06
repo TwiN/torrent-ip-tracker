@@ -74,13 +74,13 @@ func main() {
 		var header RequestHeader
 		reader := bytes.NewReader(message)
 		if err := binary.Read(reader, binary.BigEndian, &header); err != nil {
-			log.Println("Unable to read ")
+			log.Println("Unable to read message:", err.Error())
 		}
 
 		switch Action(header.Action) {
 		case Connect:
 			if header.ConnectionID != ProtocolID {
-				log.Println("Invalid protocol ID:", header)
+				log.Println("Invalid protocol ID:", header.ConnectionID)
 				continue
 			}
 			response := ConnectResponse{
