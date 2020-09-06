@@ -111,6 +111,8 @@ func main() {
 			if err := binary.Write(writer, binary.BigEndian, response); err != nil {
 				log.Println("Unable to handle announce request:", err.Error())
 			}
+		default:
+			log.Printf("Ignoring unsupported action=%d for transaction=%d", header.Action, header.TransactionID)
 		}
 	}
 }
