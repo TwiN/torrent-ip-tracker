@@ -6,12 +6,16 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 )
 
 const (
+	DefaultPort    = "12345"
 	ProtocolID     = 0x41727101980
 	MaxRequestSize = 100
 )
+
+var Port = os.Getenv("PORT")
 
 type Action int32
 
@@ -51,7 +55,11 @@ func (w ResponseWriter) Write(p []byte) (int, error) {
 }
 
 func main() {
-	addr, err := net.ResolveUDPAddr("udp4", ":12345")
+	if len(Port) == 0 {
+		Port = DefaultPort
+	}
+
+	addr, err := net.ResolveUDPAddr("udp4", fmt.Sprintf(":%s", Port))
 	if err != nil {
 		log.Fatal(err)
 	}
